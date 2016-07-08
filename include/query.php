@@ -10,24 +10,21 @@
     $recordsTotal = 0;
 
     //连接数据库
-    // $dbms = "mysql";//选择数据库类型，MySQL
-    // $host = "127.0.0.1"; //选择服务器
-    // $userName = "wp";//用户名
-    // $psw = "mkit";
-    // $dbName = "test";//数据库名称
-    // $dsn = "$dbms:host=$host;dbname=$dbName";
-    include 'db.php';
+    $dbms = "mysql";//选择数据库类型，MySQL
+    $host = "127.0.0.1"; //选择服务器
+    $userName = "wp";//用户名
+    $psw = "mkit";
+    $dbName = "test";//数据库名称
+    $dsn = "$dbms:host=$host;dbname=$dbName";
+    //include 'db.php';
     
     $pdo = new PDO($dsn, $userName, $psw);
-
-    $total = "select count(uuid) total from topic";
-    
+    $total = "select count(uuid) total from topic";  
     $req = $pdo->prepare($total);
     $req->execute();
     $resTotal = $req->fetchAll(PDO::FETCH_ASSOC);
     $recordsTotal = $resTotal[0]['total'];
 
-    
     $query = "select author,title,app_category,content,keywords,add_time,domain,image_count,uuid,tags,level from topic limit {$start},{$length}";
     $request = $pdo->prepare($query);
     $request->execute();
@@ -47,13 +44,10 @@
         $Data[$i]['tags'] = $res[$i]['tags'];
         $Data[$i]['level'] = $res[$i]['level'];
     }
-
     $output['draw'] = $draw;
     $output['iTotalRecords'] = $recordsTotal;
     $output['recordsFiltered'] = $recordsTotal;
     $output['aaData'] = $Data;
-
 	$json =  json_encode($output);
 	echo $json;
-
 ?>

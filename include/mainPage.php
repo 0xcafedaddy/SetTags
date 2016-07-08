@@ -50,10 +50,6 @@
 		"ajax": {
 			"type": "GET",
 			"url": "../wp-content/plugins/setTags/include/query.php",
-			"data": function(d) {
-				// d.relateid = $('#relateid').val(),
-				// d.clearstatus = $('#clearStatus').val();
-			}
 		},
 		"processing": true,
         "serverSide": true,
