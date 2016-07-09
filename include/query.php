@@ -1,8 +1,56 @@
-﻿<?php
+<?php
 	
-    $start = $_GET['start'];
-    $length = $_GET['length'];
-    $draw = $_GET['draw'];
+    $start = $_POST['start'];
+    $length = $_POST['length'];
+    $draw = $_POST['draw'];
+
+
+
+    $query = "select author,title,app_category,content,keywords,add_time,domain,image_count,uuid,tags,custom_tag from topic order by add_time desc limit {$start},{$length}"; 
+
+    $condition = "1 = 1 ";
+
+    if(!empty($_POST['uuid'])){
+        $uuid = $_POST['uuid'];
+        $condition = $condition." and "."uuid = '".$uuid."'";
+    }
+
+    if(!empty($_POST['domain'])){
+        $domain = $_POST['domain'];
+        $condition = $condition." and "."domain like '%".$domain."%'";
+    }
+
+    if(!empty($_POST['title'])){
+        $title = $_POST['title'];
+        $condition = $condition." and "."title like '%".$title."%'";
+    }
+
+    if(!empty($_POST['author'])){
+        $author = $_POST['author'];
+        $condition = $condition." and "."author like '%".$author."%'";
+    }
+
+    if(!empty($_POST['tags'])){
+        $tags = $_POST['tags'];
+        $condition = $condition." and "."tags like '%".$tags."%'";
+    }
+
+    if(!empty($_POST['postDateStart'])){
+        $postDateStart = $_POST['postDateStart'];
+        $condition = $condition." and "."add_time >= '".$postDateStart."'";
+    }
+
+    if(!empty($_POST['postDateEnd'])){
+        $postDateEnd = $_POST['postDateEnd']; 
+        $condition = $condition." and "."add_time <= '".$postDateEnd."'";
+    }
+
+
+    if(!empty($_POST['uuid']) || !empty($_POST['domain'])  ||  !empty($_POST['title'])  ||  !empty($_POST['author'])  || !empty($_POST['tags'])  ||  !empty($_POST['postDateStart']) || !empty($_POST['postDateEnd']) ){
+
+        $query = "select author,title,app_category,content,keywords,add_time,domain,image_count,uuid,tags,custom_tag from topic where {$condition}  order by add_time desc limit {$start},{$length}";
+    }
+
 
     //条件过滤后记录数 必要
     $recordsFiltered = 0; 
@@ -13,17 +61,15 @@
     include 'db.php';
     
     $pdo = new PDO($dsn, $userName, $psw);
-    $total = "select count(uuid) total from topic";  
+    $total = "select count(uuid) total from topic where {$condition}";  
     $req = $pdo->prepare($total);
     $req->execute();
     $resTotal = $req->fetchAll(PDO::FETCH_ASSOC);
     $recordsTotal = $resTotal[0]['total'];
 
-    $query = "select author,title,app_category,content,keywords,add_time,domain,image_count,uuid,tags,custom_tag from topic limit {$start},{$length}";
     $request = $pdo->prepare($query);
     $request->execute();
     $res = $request->fetchAll(PDO::FETCH_ASSOC);
-
     $Data = array();
 
     for($i = 0 ; $i <count($res); $i++){ 
