@@ -123,7 +123,13 @@ div.content{
               <a class="view_source"></a>
 </div>
 <div class="content">
-     <?php echo $res[0]['content']?> 
+     <?php //echo $res[0]['content']?> 
+
+    <?php
+        $data = json_decode($res[0]['content'],true);
+        echo $data['tcontent'];
+    ?>
+
 </div>
 </div>
 </body>
