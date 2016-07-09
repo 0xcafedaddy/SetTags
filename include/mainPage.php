@@ -100,10 +100,10 @@
 		  		},{
 
 		  			"render": function (data, type, row) {
-		  				if(row.level == 2){
-		  					return  '<select id="level_'+row.uuid+'"> <option value ="1">HOT</option> <option value ="2" selected="selected">NORMAL</option> </select>';
+		  				if(row.custom_tag == 2){
+		  					return  '<select id="custom_tag_'+row.uuid+'"> <option value ="1">HOT</option> <option value ="2" selected="selected">NORMAL</option> </select>';
 		  				}
-		        		  return  '<select id="level_'+row.uuid+'"> <option value ="1">HOT</option> <option value ="2" >NORMAL</option> </select>';
+		        		  return  '<select id="custom_tag_'+row.uuid+'"> <option value ="1">HOT</option> <option value ="2" >NORMAL</option> </select>';
 		        	   },
 		        	   "targets": 10
 		  		},{
@@ -127,8 +127,8 @@
 //提交数据
 function postData(uuid){
 	var tags = $("#tags_"+uuid).val();
-	var level = $("#level_"+uuid).val();
-	var str = '{'+'"uuid":"'+uuid+'",'+'"tags":"'+$("#tags_"+uuid).val()+'",'+'"level":"'+$("#level_"+uuid).val()+'"}'; 
+	var custom_tag = $("#custom_tag_"+uuid).val();
+	var str = '{'+'"uuid":"'+uuid+'",'+'"tags":"'+$("#tags_"+uuid).val()+'",'+'"custom_tag":"'+$("#custom_tag_"+uuid).val()+'"}'; 
 	$.ajax({
 		cache:false,
 		type:"POST",

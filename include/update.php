@@ -9,7 +9,7 @@
 
     include 'db.php';
     $pdo = new PDO($dsn, $userName, $psw);
-    $query = "update topic set tags = '$tags' ,level = '$level' where uuid = '$uuid'";
+    $query = "update topic set tags = '$tags' ,custom_tag = '$custom_tag' where uuid = '$uuid'";
 
     //执行SQL语句
 	$result = $pdo->prepare($query);

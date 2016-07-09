@@ -19,7 +19,7 @@
     $resTotal = $req->fetchAll(PDO::FETCH_ASSOC);
     $recordsTotal = $resTotal[0]['total'];
 
-    $query = "select author,title,app_category,content,keywords,add_time,domain,image_count,uuid,tags,level from topic limit {$start},{$length}";
+    $query = "select author,title,app_category,content,keywords,add_time,domain,image_count,uuid,tags,custom_tag from topic limit {$start},{$length}";
     $request = $pdo->prepare($query);
     $request->execute();
     $res = $request->fetchAll(PDO::FETCH_ASSOC);
@@ -36,7 +36,7 @@
         $Data[$i]['image_count'] = $res[$i]['image_count'];
         $Data[$i]['uuid'] = $res[$i]['uuid'];
         $Data[$i]['tags'] = $res[$i]['tags'];
-        $Data[$i]['level'] = $res[$i]['level'];
+        $Data[$i]['custom_tag'] = $res[$i]['custom_tag'];
     }
     $output['draw'] = $draw;
     $output['iTotalRecords'] = $recordsTotal;
