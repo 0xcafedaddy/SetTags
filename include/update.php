@@ -5,7 +5,7 @@
 
 	$uuid = $res->uuid;
 	$tags =  $res->tags;
-	$level =  $res->level;
+	$custom_tag =  $res->custom_tag;
 
     include 'db.php';
     $pdo = new PDO($dsn, $userName, $psw);
